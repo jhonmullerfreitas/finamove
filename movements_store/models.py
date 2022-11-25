@@ -22,7 +22,7 @@ class MovementStore(models.Model):
     date_of_currence = models.CharField(max_length=8)
     transaction_value = models.DecimalField(max_digits=10, decimal_places=2)
     card = models.CharField(max_length=12)
-    time = models.CharField(max_length=6)
+    time = models.CharField(max_length=8)
     store_name = models.ForeignKey(
         "stores.Store",
         on_delete=models.CASCADE,
