@@ -1,8 +1,12 @@
+import ipdb
 from rest_framework import serializers
+
+from owners.models import Owner
+from stores.models import Store
+from movements_store.models import MovementStore
 
 from .models import Movement
 
-import ipdb
 
 class MovementSerializer(serializers.ModelSerializer):
 
@@ -37,6 +41,8 @@ class MovementSerializer(serializers.ModelSerializer):
 
                 movements_data.append(transaction_data)
 
+        # owner = Owner.objects.create(name="Jhon", cpf="02224276209")
+        # store = Store.objects.create(name="Loja da Nay", owner=owner)
 
 
         return document
