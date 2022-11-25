@@ -1,13 +1,16 @@
 from datetime import time
 
+import ipdb
 from rest_framework import serializers
 
 from movements_store.models import MovementStore
 from movements_store.serializers import MovementStoreSerializer
 from owners.models import Owner
 from stores.models import Store
+from utils import choice
 
 from .models import Movement
+
 
 class MovementSerializer(serializers.ModelSerializer):
 
@@ -29,7 +32,7 @@ class MovementSerializer(serializers.ModelSerializer):
                 time_currence = str(time(hour=int(line[42:44]), minute=int(line[44:46]), second=int(line[46:48])))
                 date_currence = f'{line[1:5]}/{line[5:7]}/{line[7:9]}'
 
-                transaction_type=line[0]
+                transaction_type=choice(line[0])
                 transaction_value=str(float(line[9:19])/100.00)
                 cpf=line[19:30]
                 card=line[30:42]
