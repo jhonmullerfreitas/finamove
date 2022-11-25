@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'movements',
+    'movements_store',
+    'owners',
+    'stores',
     'rest_framework',
 ]
 
