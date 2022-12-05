@@ -10,4 +10,5 @@ class Store(models.Model):
         on_delete=models.CASCADE,
         related_name="stores"
     )
-    balance = models.FloatField(null=True, blank=True)
+    balance = models.FloatField(null=True, blank=True, default=0)
+    
