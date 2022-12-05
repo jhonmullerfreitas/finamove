@@ -7,7 +7,7 @@ from movements_store.models import MovementStore
 from movements_store.serializers import MovementStoreSerializer
 from owners.models import Owner
 from stores.models import Store
-from utils import choice
+from utils import choice, calc_balance
 
 from .models import Movement
 
@@ -33,16 +33,20 @@ class MovementSerializer(serializers.ModelSerializer):
                 date_currence = f'{line[1:5]}/{line[5:7]}/{line[7:9]}'
 
                 transaction_type=choice(line[0])
-                transaction_value=str(float(line[9:19])/100.00)
+                transaction_value=float(line[9:19])/100.00
                 cpf=line[19:30]
                 card=line[30:42]
                 owner=line[48:62].strip()
                 store_name=line[62:80].strip()
 
-
                 owner_object = Owner.objects.get_or_create(name=owner, cpf=cpf)
                 store_object = Store.objects.get_or_create(name=store_name, owner=owner_object[0])
 
+                account_balance = store_object[0].balance
+                store_object[0].balance = calc_balance(transaction_type, transaction_value, account_balance)
+                
+                store_object[0].save()
+    
                 MovementStore.objects.create(
                     transaction_type=transaction_type,
                     date_of_currence=date_currence,
